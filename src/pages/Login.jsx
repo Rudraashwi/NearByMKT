@@ -1,73 +1,89 @@
-import React, { useState } from "react";
+import React from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebookF, FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { Mail, Lock } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import loginImg from "../assets/7.png";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (email && password) {
-      navigate("/market");
-    }
-  };
-
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-500 flex justify-center items-center px-6">
+    <div className="flex items-center justify-center bg-linear-to-b from-gray-500 to-blue-100 py-24 px-6">
+      <div className="flex w-full max-w-4xl bg-linear-to-b from-gray-550 to-blue-100 rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
+        
+        {/* Left Section */}
+        <div className="flex-1 p-10 flex flex-col justify-center">
+          <h1 className="text-blue-950 text-5xl font-semibold mb-2">Near By MKT</h1>
+          <p className="text-2xl text-blue-800 mb-6">Welcome back !!!</p>
+          <h2 className="text-3xl text-blue-900 font-bold mb-6">Log In</h2>
 
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", duration: 0.9 }}
-        className="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8"
-      >
-        <h1 className="text-3xl font-bold text-center text-blue-700 mb-1 tracking-wide">
-          Welcome Back 👋
-        </h1>
-        <p className="text-center text-gray-500 mb-8">
-          Login to continue exploring nearby stores
-        </p>
+          {/* Email/Phone Input */}
+          <label className="text-gray-700 text-sm font-medium">Email / Phone</label>
+          <input
+            type="text"
+            placeholder="login@gmail.com or 9876543210"
+            className="w-full mt-1 mb-4 p-3 rounded-md bg-blue-100 outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          {/* Email */}
-          <div className="relative">
-            <Mail className="absolute left-4 top-3 text-blue-600" />
-            <input
-              type="email"
-              placeholder="Email address"
-              className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          {/* Password Input */}
+          <label className="text-gray-700 text-sm font-medium">Password</label>
+          <input
+            type="password"
+            placeholder="••••••••"
+            className="w-full mt-1 p-3 rounded-md bg-blue-100 outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          <div className="text-right text-sm text-gray-500 mt-1 mb-4 cursor-pointer hover:text-blue-600">
+            Forgot Password?
           </div>
 
-          {/* Password */}
-          <div className="relative">
-            <Lock className="absolute left-4 top-3 text-blue-600" />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
+          {/* Animated Blue Login Button */}
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="w-full py-3 bg-blue-600 rounded-xl text-white font-semibold shadow-md"
-            type="submit"
+            whileHover={{
+              scale: 1.07,
+              boxShadow: "0 0 20px rgba(59,130,246,0.6)",
+              backgroundColor: "#1e40af",
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 250 }}
+            className="bg-blue-500 text-white py-3 rounded-full font-semibold shadow-md border border-blue-200 transition-all duration-300"
           >
-            Login
+            LOGIN →
           </motion.button>
-        </form>
-      </motion.div>
+
+          {/* Divider */}
+          <p className="text-center text-gray-500 text-sm mt-6 mb-3">or continue with</p>
+
+          {/* Social Login */}
+          <div className="flex justify-center gap-4">
+            <button className="border rounded-full p-3 hover:bg-gray-100 transition">
+              <FcGoogle size={22} />
+            </button>
+            <button className="border rounded-full p-3 hover:bg-gray-100 transition">
+              <FaFacebookF size={22} className="text-blue-600" />
+            </button>
+            <button className="border rounded-full p-3 hover:bg-gray-100 transition">
+              <FaGithub size={22} />
+            </button>
+          </div>
+
+          {/* Sign Up Link */}
+          <p className="text-center text-sm text-gray-600 mt-6">
+            Don't have an account yet?{" "}
+            <span className="text-blue-500 cursor-pointer font-medium hover:underline">
+              Sign up for free
+            </span>
+          </p>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex-1 bg-linear-to-b from-gray-600 to-blue-100 flex flex-col items-center justify-center p-8 relative">
+          {/* Logos inside the box */}
+        
+          <img
+            src={loginImg}
+            alt="Login"
+            className="w-72 h-auto object-contain translate-x-[-20px] drop-shadow-xl animate-float"
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -31,7 +31,7 @@ const services = [
 
 const Services = () => {
   return (
-    <div className="min-h-screen bg-[#f9fbff]">
+    <div className="min-h-screen bg-linear-to-b from-gray-500 to-blue-100">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-10 shadow-md text-center">
         <h1 className="text-3xl font-bold tracking-wide">Our Services</h1>

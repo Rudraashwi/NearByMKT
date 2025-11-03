@@ -10,9 +10,9 @@ const notifications = [
 
 const Notification = () => {
   return (
-    <section className="pt-24 px-6 md:px-20 bg-gradient-to-b from-blue-50 to-sky-100 min-h-screen">
+    <section className="pt-24 px-6 md:px-20 bg-linear-to-b from-gray-500 to-blue-100 min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-blue-800 mb-6">Notifications</h2>
+        <h2 className="text-5xl font-bold text-blue-950 mb-6">Notifications</h2>
         <div className="space-y-4">
           {notifications.map((notif) => (
             <motion.div

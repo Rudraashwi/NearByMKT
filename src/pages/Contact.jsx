@@ -4,13 +4,13 @@ import { Phone, Mail, Headphones } from "lucide-react";
 
 const Contact = () => {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-300 via-blue-200 to-blue-100 overflow-hidden pt-32 sm:pt-36">
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-gray-500 to-blue-100 overflow-hidden pt-32 sm:pt-36">
       {/* 🌈 Animated Background Gradient */}
       <motion.div
         initial={{ backgroundPosition: "0% 50%" }}
         animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-300 to-sky-200 opacity-50 blur-3xl"
+        className="absolute inset-0 bg-linear-to-b from-gray-500 to-blue-100 opacity-50 blur-3xl"
       />
 
       {/* 🌟 Header Section */}
@@ -20,7 +20,7 @@ const Contact = () => {
         transition={{ duration: 0.8 }}
         className="z-10 text-center mb-16"
       >
-        <h1 className="text-5xl sm:text-6xl font-extrabold text-blue-900 mb-4 tracking-wide">
+        <h1 className="text-5xl sm:text-6xl font-extrabold text-blue-950 mb-4 tracking-wide">
           Get in Touch
         </h1>
         <p className="text-blue-800 text-lg sm:text-xl">
@@ -73,7 +73,7 @@ const Contact = () => {
       >
         <p>© {new Date().getFullYear()} NearbyMart — All Rights Reserved</p>
         <p className="text-sm text-blue-800 mt-2">
-          Designed with 💙 using React + Framer Motion
+          Designed with 💙
         </p>
       </motion.footer>
     </div>
@@ -96,14 +96,14 @@ const ContactCard = ({ icon, title, description, info, link }) => {
       }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 200 }}
-      className="relative bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-md hover:shadow-xl transition-all flex flex-col items-center text-center cursor-pointer group overflow-hidden"
+      className="relative bg-blue/20 backdrop-blur-md rounded-2xl p-8 shadow-md hover:shadow-xl transition-all flex flex-col items-center text-center cursor-pointer group overflow-hidden"
     >
       {/* 🔷 Animated Glow on Hover */}
       <motion.div
         initial={{ opacity: 0 }}
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-sky-300/20 rounded-2xl blur-lg z-0"
+        className="absolute inset-0 bg-linear-to-b from-gray-500 to-blue-100 rounded-2xl blur-lg z-0"
       />
 
       <div className="z-10 mb-4">{icon}</div>
@@ -111,7 +111,7 @@ const ContactCard = ({ icon, title, description, info, link }) => {
       <p className="text-blue-800 text-sm mb-4 z-10">{description}</p>
       <motion.div
         whileHover={{ scale: 1.1 }}
-        className="text-blue-700 font-medium bg-blue-100 px-4 py-2 rounded-full z-10"
+        className="text-blue-100 font-medium bg-gray-600 px-4 py-2 rounded-full z-10"
       >
         {info}
       </motion.div>

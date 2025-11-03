@@ -14,7 +14,7 @@ const Footer = ({ onClick }) => {
   const navigate = useNavigate();
 
   return (
-    <footer className="relative bg-linear-to-br from-blue-800 via-blue-700 to-blue-600 text-white py-16 px-6 md:px-20 overflow-hidden">
+    <footer className="relative bg-linear-to-br from-blue-200 via-gray-700 to-blue-200 text-white py-16 px-6 md:px-20 overflow-hidden">
       {/* 💠 Background subtle animation */}
       <motion.div
         initial={{ opacity: 0 }}

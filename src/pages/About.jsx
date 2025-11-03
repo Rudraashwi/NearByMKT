@@ -39,7 +39,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-blue-200 flex flex-col items-center py-[10rem] px-4">
+    <div className="min-h-screen bg-linear-to-b from-gray-500 to-blue-100 flex flex-col items-center py-[10rem] px-4">
       {/* 🌟 Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -40 }}
@@ -48,12 +48,12 @@ const About = () => {
         className="text-center mb-12"
       >
         <motion.h1
-          className="text-5xl sm:text-6xl font-extrabold text-blue-900 mb-3 tracking-wide"
+          className="text-5xl sm:text-6xl font-extrabold text-blue-950 mb-3 tracking-wide"
           whileHover={{ scale: 1.05 }}
         >
-          NearbyMart
+          NearbyMkt
         </motion.h1>
-        <p className="text-lg sm:text-xl text-blue-800">
+        <p className="text-lg sm:text-xl text-blue-900">
           Your Local Shopping Companion — Version 2.1.0
         </p>
       </motion.div>
@@ -66,7 +66,7 @@ const About = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-5xl bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-8 mb-10"
       >
-        <h2 className="text-2xl font-bold text-blue-900 mb-6 flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-blue-950 mb-6 flex items-center gap-2">
           <Star className="text-yellow-500" /> Key Features
         </h2>
 

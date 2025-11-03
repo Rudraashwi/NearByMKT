@@ -19,6 +19,12 @@ import FoodDetails from "./pages/FoodDetails";
 // 🧱 Layouts
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Careers from "./pages/Careers";
+import Directory from "./sections/Directory";
+import Market from "./sections/Market";
+import Food from "./sections/Food";
+import Grocery from "./sections/Grocery";
+import Notification from "./components/Notification";
 
 const App = () => {
   return (
@@ -35,12 +41,17 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/fooditem/:id" element={<FoodDetails />} />
+            <Route path="/food/:id" element={<FoodDetails />} />
             <Route path="*" element={<ErrorPage />} />
-            <Route path="/notification" element={<Notification />} />
-            <Route path="/dir" element={<Notification />} />
+            <Route path="/notifications" element={<Notification />} /> 
+            <Route path="/careers" element={<Careers />} /> 
+            <Route path="/directory" element={<Directory />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/food" element={<Food />} />
+            <Route path="/groceries" element={<Grocery />} />
+            
           </Routes>
         </main>
 

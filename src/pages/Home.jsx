@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 // Import slideshow images
-import img1 from "../assets/1.jpg";
-import img2 from "../assets/2.jpg";
-import img3 from "../assets/3.jpg";
-import img4 from "../assets/4.jpg";
-import img5 from "../assets/5.jpg";
+import img1 from "../assets/1.png";
+import img2 from "../assets/2.png";
+import img3 from "../assets/3.png";
+import img4 from "../assets/4.png";
+import img5 from "../assets/5.png";
+import HeroVideo from "./HeroVideo";
 
 const images = [img1, img2, img3, img4, img5];
 
 const Home = () => {
   const [current, setCurrent] = useState(0);
+  const navigate = useNavigate();
 
   // Auto-slide every 4s
   useEffect(() => {
@@ -21,13 +24,11 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Stagger animation variants for cards
+  // Animation variants
   const container = {
     hidden: {},
     show: {
-      transition: {
-        staggerChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.2 },
     },
   };
 
@@ -37,7 +38,10 @@ const Home = () => {
   };
 
   return (
-    <div className="pt-24 bg-sky-200 min-h-screen overflow-hidden">
+    <div className="pt-24 bg-linear-to-b from-gray-950 to-blue-100 min-h-screen overflow-hidden">
+      <div id="after-hero">
+
+      <HeroVideo />
       {/* Slideshow */}
       <div className="relative w-full h-[55vh] sm:h-[70vh] overflow-hidden rounded-b-3xl shadow-lg">
         <motion.img
@@ -77,41 +81,46 @@ const Home = () => {
         <Card
           variants={cardVariant}
           title="Directory"
-          color="from-blue-700 to-blue-500"
+          color="from-blue-200 via-gray-600 to-blue-200"
           description="Explore shops, services, and local businesses near you — everything from salons to repair centers."
           buttonText="Explore Directory 🗂️"
+          onClick={() => navigate("/directory")}
         />
 
         <Card
           variants={cardVariant}
           title="Market"
-          color="from-indigo-700 to-blue-600"
+          color="from-blue-200 via-gray-600 to-blue-200"
           description="Find the best local markets offering fresh produce, clothing, electronics, and more."
           buttonText="Explore Market 🏪"
+          onClick={() => navigate("/market")}
         />
 
         <Card
           variants={cardVariant}
           title="Food"
-          color="from-sky-700 to-blue-500"
+          color="from-blue-200 via-gray-600 to-blue-200"
           description="Discover restaurants, cafes, and food stalls serving your favorite dishes nearby."
           buttonText="Explore Food 🍔"
+          onClick={() => navigate("/food")}
         />
 
         <Card
           variants={cardVariant}
           title="Groceries"
-          color="from-cyan-700 to-sky-500"
+          color="from-blue-200 via-gray-600 to-blue-200"
           description="Get daily essentials and groceries from trusted nearby stores at your fingertips."
           buttonText="Explore Groceries 🛒"
+          onClick={() => navigate("/groceries")}
         />
       </motion.div>
+      </div>
     </div>
   );
 };
 
-// Card Component
-const Card = ({ title, description, buttonText, color, variants }) => {
+// ✅ Card Component
+const Card = ({ title, description, buttonText, color, variants, onClick }) => {
   return (
     <motion.div
       variants={variants}
@@ -119,12 +128,13 @@ const Card = ({ title, description, buttonText, color, variants }) => {
         scale: 1.05,
         boxShadow: "0 12px 30px rgba(37,99,235,0.35)",
       }}
-      className={`bg-gradient-to-br ${color} text-white rounded-2xl shadow-lg
+      className={`bg-linear-to-br ${color} text-white rounded-2xl shadow-lg
                   hover:shadow-2xl transition-all duration-500 p-8 sm:p-10 text-center`}
     >
       <h2 className="text-3xl sm:text-4xl font-bold mb-3 drop-shadow-md">{title}</h2>
       <p className="text-blue-100 text-base sm:text-lg mb-6 leading-relaxed">{description}</p>
       <motion.button
+        onClick={onClick} // ✅ Added click navigation
         whileHover={{
           scale: 1.1,
           backgroundColor: "#fff",

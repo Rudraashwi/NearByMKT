@@ -13,7 +13,7 @@ const Header = () => {
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 
+      className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-200 via-gray-600 to-blue-200 
                  text-white shadow-lg z-50 backdrop-blur-sm"
     >
       <div className="w-full max-w-[1400px] mx-auto flex flex-wrap items-center justify-between 
