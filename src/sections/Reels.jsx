@@ -162,7 +162,7 @@ export default function Reels() {
       className="relative w-full overflow-hidden bg-black"
       style={{ marginTop: "2.4cm", height: "calc(100vh - 2.4cm)" }}
     >
-      <div className="h-full max-w-6xl mx-auto flex items-center justify-center px-4">
+      <div className="h-full max-w-md mx-auto flex items-center justify-center px-4">
         <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-black">
           {/* ----- video pane ----- */}
           <AnimatePresence initial={false} mode="wait">
