@@ -1,18 +1,11 @@
-// src/pages/Food.jsx
 import React, { useState, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  Star,
-  MapPin,
-  CheckCircle,
-  Tag,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Star, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import foodData from "../data/food.json";
+import FilterBar from "../components/FilterBar";
 
-// category icons from assets
+// category icons
 import allIcon from "../assets/all.png";
 import pizzaIcon from "../assets/pizza.png";
 import burgerIcon from "../assets/burger.png";
@@ -31,6 +24,7 @@ const parseDistanceKm = (d) => {
   const m = String(d || "").match(/([\d.]+)/);
   return m ? Number(m[1]) : 99;
 };
+
 const smoothScroll = (el, dir, px = 320) => {
   if (!el) return;
   el.scrollBy({ left: dir === "left" ? -px : px, behavior: "smooth" });
@@ -40,6 +34,10 @@ const Food = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const carousels = useRef({});
+
+  const handleApply = (filters) => {
+    console.log("APPLIED FILTERS:", filters);
+  };
 
   const foods = useMemo(
     () =>
@@ -66,7 +64,6 @@ const Food = () => {
     { name: "More", icon: moreIcon },
   ];
 
-  // filter logic for all sections
   const filteredFoods =
     activeCategory === "All"
       ? foods
@@ -134,6 +131,7 @@ const Food = () => {
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-xl font-bold text-blue-700">{title}</h2>
         </div>
+
         <div className="relative">
           <button
             onClick={() => smoothScroll(carousels.current[refKey], "left")}
@@ -169,7 +167,7 @@ const Food = () => {
         .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
       `}</style>
 
-      {/* top video */}
+      {/* Top video */}
       <div className="w-full overflow-hidden mb-6">
         <video
           src="/intory.mp4"
@@ -182,7 +180,12 @@ const Food = () => {
         />
       </div>
 
-      {/* categories */}
+      {/* 🔥 FilterBar right below video */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-10">
+        <FilterBar onApply={handleApply} />
+      </div>
+
+      {/* Categories */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
@@ -223,7 +226,7 @@ const Food = () => {
         </div>
       </motion.div>
 
-      {/* sections */}
+      {/* Food Sections */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6">
         {Object.entries(sections).map(([title, data]) =>
           data.length > 0 ? <Section key={title} title={title} data={data} /> : null

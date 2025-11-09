@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Star, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import businesses from "../data/businesses.json";
+import MarketSection from "../pages/MarketSection";
 
 import img9 from "../assets/9.png";
 import img10 from "../assets/10.png";
@@ -18,7 +19,7 @@ import img18 from "../assets/18.png";
 const Directory = () => {
   const [filter, setFilter] = useState("All");
   const navigate = useNavigate();
-  const clothingRef = useRef(null); // 👈 scroll target
+  const clothingRef = useRef(null); 
 
   const categories = [
     { name: "All", img: img18 },
@@ -71,6 +72,9 @@ const Directory = () => {
 
         {/* Optional subtle overlay effect */}
         <div className="absolute inset-0 bg-black/10 hover:bg-black/20 transition-all duration-300"></div>
+      </div>
+       <div>
+        <MarketSection />
       </div>
 
       {/* 🌟 Category Section */}

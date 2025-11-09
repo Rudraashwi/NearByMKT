@@ -25,6 +25,7 @@ import Market from "./sections/Market";
 import Food from "./sections/Food";
 import Grocery from "./sections/Grocery";
 import Notification from "./components/Notification";
+import Reels from "./sections/Reels";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/market" element={<Market />} />
             <Route path="/food" element={<Food />} />
             <Route path="/groceries" element={<Grocery />} />
+            <Route path="/reels" element={<Reels />} />
             
           </Routes>
         </main>

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Star, MapPin, CheckCircle, Tag, Phone, ChevronLeft, ChevronRight } from "lucide-react";
 import businessesRaw from "../data/businesses.json";
 import { useNavigate } from "react-router-dom";
+import MarketSection from "../pages/MarketSection";
+import MarketCategories from "../components/MarketCategories";
 
 /**
  * Market.jsx
@@ -67,12 +69,19 @@ const Market = () => {
 
   // small card for horizontal lists
   const SmallCard = ({ biz }) => (
-    <motion.div
+    
+    <div>
+      
+     
+      
+      
+      <motion.div
       layout
       whileHover={{ scale: 1.03 }}
       className="min-w-[220px] max-w-[220px] bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer"
       onClick={() => navigate(`/business/${biz.id}`)}
     >
+      
       <div className="relative h-36 overflow-hidden">
         <img
           src={biz.image || "https://via.placeholder.com/400x300?text=No+Image"}
@@ -102,7 +111,7 @@ const Market = () => {
           <div className="text-sm font-semibold text-blue-700">₹{Math.floor((biz.id % 100) * 3 + 49)}</div>
         </div>
       </div>
-    </motion.div>
+    </motion.div></div>
   );
 
   // Large product card for "All Products"
@@ -204,7 +213,8 @@ const Market = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fbff] pt-[2.2cm]">
+    <div className="min-h-screen bg-[#f8fbff] pt-[2.1cm]">
+      
       {/* inline small CSS for hiding scrollbars and utility */}
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -225,6 +235,12 @@ const Market = () => {
             style={{ height: "14vw", minHeight: "48px", objectFit: "cover" }} // width/10 and min height for mobiles
           />
         </div>
+      </div>
+       <div>
+        <MarketSection />
+      </div>
+      <div className="justify-items-start">
+        <MarketCategories />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">

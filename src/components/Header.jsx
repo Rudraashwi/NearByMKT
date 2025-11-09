@@ -93,6 +93,12 @@ const Header = () => {
             >
               Contact
             </Link>
+            <Link
+              to="/reels"
+              className="text-white text-sm sm:text-base font-medium hover:text-blue-200 transition-all duration-300"
+            >
+              Reels
+            </Link>
           </div>
 
           <Link to="/login">
