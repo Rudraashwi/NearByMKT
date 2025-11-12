@@ -10,22 +10,21 @@ import Login from "./pages/Login";
 import FAQ from "./pages/FAQ";
 import ErrorPage from "./pages/ErrorPage";
 import BusinessDetails from "./pages/BusinessDetails";
-import Privacy from "./pages/Privacy"; 
+import Privacy from "./pages/Privacy";
 import FoodDetails from "./pages/FoodDetails";
+import Careers from "./pages/Careers";
 
 // 🧩 Sections
-
-
-// 🧱 Layouts
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Careers from "./pages/Careers";
 import Directory from "./sections/Directory";
 import Market from "./sections/Market";
 import Food from "./sections/Food";
 import Grocery from "./sections/Grocery";
-import Notification from "./components/Notification";
 import Reels from "./sections/Reels";
+
+// 🧱 Layouts
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Notification from "./components/Notification";
 
 const App = () => {
   return (
@@ -36,7 +35,6 @@ const App = () => {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-           
             <Route path="/business/:id" element={<BusinessDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
@@ -46,14 +44,13 @@ const App = () => {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/food/:id" element={<FoodDetails />} />
             <Route path="*" element={<ErrorPage />} />
-            <Route path="/notifications" element={<Notification />} /> 
-            <Route path="/careers" element={<Careers />} /> 
+            <Route path="/notifications" element={<Notification />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="/directory" element={<Directory />} />
             <Route path="/market" element={<Market />} />
             <Route path="/food" element={<Food />} />
             <Route path="/groceries" element={<Grocery />} />
             <Route path="/reels" element={<Reels />} />
-            
           </Routes>
         </main>
 

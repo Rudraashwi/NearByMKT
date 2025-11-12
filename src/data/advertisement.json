@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ad1",
+    "image": "https://www.google.com/imgres?q=ads%20image&imgurl=https%3A%2F%2Fimg.freepik.com%2Ffree-psd%2Fdigital-marketing-live-webinar-social-media-post-template_47987-20604.jpg%3Fsemt%3Dais_hybrid%26w%3D740%26q%3D80&imgrefurl=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fsocial-media-ads&docid=E_uryr4KlweQPM&tbnid=hF15_3a0QN_KyM&vet=12ahUKEwim_taKyuyQAxWdXGwGHbwYGmYQM3oECBsQAA..i&w=740&h=740&hcb=2&ved=2ahUKEwim_taKyuyQAxWdXGwGHbwYGmYQM3oECBsQAA",
+    "title": "Get 50% Off on Smart Gadgets!",
+    "brand": "TechHub India",
+    "cta": "Shop Now",
+    "link": "https://techhub.in/offers"
+  },
+  {
+    "id": "ad2",
+    "image": "https://www.google.com/imgres?q=ads%20image&imgurl=https%3A%2F%2Fimg.freepik.com%2Ffree-psd%2Fdigital-marketing-live-webinar-social-media-post-template_47987-20604.jpg%3Fsemt%3Dais_hybrid%26w%3D740%26q%3D80&imgrefurl=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fsocial-media-ads&docid=E_uryr4KlweQPM&tbnid=hF15_3a0QN_KyM&vet=12ahUKEwim_taKyuyQAxWdXGwGHbwYGmYQM3oECBsQAA..i&w=740&h=740&hcb=2&ved=2ahUKEwim_taKyuyQAxWdXGwGHbwYGmYQM3oECBsQAA",
+    "title": "Fuel Your Fitness Journey 💪",
+    "brand": "FitX Nutrition",
+    "cta": "Explore Range",
+    "link": "https://fitxnutrition.in/"
+  }
+]

@@ -1,79 +1,94 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import reelsData from "../data/reels.json";
+import adsData from "../data/advertisement.json";
 import {
-  Volume2, VolumeX, Flame, MessageCircle, Share2, Upload,
-  ChevronUp, ChevronDown, Star, StarOff, User
+  Volume2,
+  VolumeX,
+  Flame,
+  MessageCircle,
+  Share2,
+  ChevronUp,
+  ChevronDown,
+  Star,
+  StarOff,
+  User,
+  Music2,
 } from "lucide-react";
 
-import reel1 from "../assets/r1.mp4";
-import reel2 from "../assets/r2.mp4";
-import avatar from "../assets/9.png";
+const LS_KEY = "nbm_reels_v3";
 
-// ---------------- localStorage helpers ----------------
-const LS_KEY = "nbm_reels_v1";
 const loadLS = () => {
-  try { return JSON.parse(localStorage.getItem(LS_KEY) || "null"); }
-  catch { return null; }
+  try {
+    return JSON.parse(localStorage.getItem(LS_KEY) || "null");
+  } catch {
+    return null;
+  }
 };
 const saveLS = (data) => localStorage.setItem(LS_KEY, JSON.stringify(data));
 
-// ---------------- demo reels (can be empty) -----------
-const seedReels = [
-  {
-    id: "demo-1",
-    src: reel1,
-    song: "Night Drive – Synthwave",
-    profileName: "@nearby.mkt",
-    profilePic: avatar,
-    caption: "Smart market • smart city • smart life ✨",
-    likes: 128,
-    comments: ["🔥", "Nice vibe!", "Clean cuts!"],
-    faved: false,
-  },
-  {
-    id: "demo-2",
-    src: reel2,
-    song: "Indie Chill – Summer Loop",
-    profileName: "@vibe.studio",
-    profilePic: avatar,
-    caption: "Groceries managed like magic. #NearByMKT",
-    likes: 256,
-    comments: [],
-    faved: true,
-  },
-];
-
 export default function Reels() {
   const persisted = loadLS();
-  const [reels, setReels] = useState(persisted?.reels?.length ? persisted.reels : seedReels);
+  const [reels, setReels] = useState(persisted?.reels?.length ? persisted.reels : []);
   const [index, setIndex] = useState(0);
   const [muted, setMuted] = useState(true);
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [heartBurst, setHeartBurst] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [floatingHearts, setFloatingHearts] = useState([]);
 
-  const fileRef = useRef(null);
   const videoRefs = useRef({});
   const lastTapRef = useRef(0);
 
   const active = reels[index];
   const activeId = active?.id;
 
-  useEffect(() => { saveLS({ reels }); }, [reels]);
+  useEffect(() => {
+    try {
+      const r = Array.isArray(reelsData) ? reelsData : [];
+      const a = Array.isArray(adsData) ? adsData : [];
+
+      const mixed = [];
+      r.forEach((reel, i) => {
+        const reelWithId = { ...reel, id: reel.id ?? `reel-${i}` };
+        mixed.push(reelWithId);
+
+        if ((i + 1) % 5 === 0 && a[Math.floor(i / 5)]) {
+          const ad = a[Math.floor(i / 5)];
+          const adWithId = { ...ad, id: ad.id ?? `ad-${Math.floor(i / 5)}`, isAd: true };
+          mixed.push(adWithId);
+        }
+      });
+
+      if (!(persisted?.reels?.length)) setReels(mixed);
+    } catch (err) {
+      console.error("Error preparing reels:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []); 
 
   useEffect(() => {
-    Object.values(videoRefs.current).forEach((v) => { try { v.pause(); } catch {} });
+    if (reels.length) saveLS({ reels });
+  }, [reels]);
+
+  useEffect(() => {
+    Object.values(videoRefs.current).forEach((v) => {
+      try {
+        v.pause();
+      } catch {}
+    });
     const v = videoRefs.current[activeId];
     if (v) {
       const tryPlay = () => v.play().catch(() => {});
-      v.currentTime = 0;
-      // iOS sometimes needs a small delay after source switch
+      try {
+        v.currentTime = 0;
+      } catch {}
       setTimeout(tryPlay, 30);
     }
   }, [activeId]);
 
-  // keyboard navigation
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowDown") next();
@@ -82,7 +97,7 @@ export default function Reels() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [index]);
+  }, [index, reels.length]);
 
   const next = () => setIndex((i) => Math.min(i + 1, reels.length - 1));
   const prev = () => setIndex((i) => Math.max(i - 1, 0));
@@ -90,9 +105,7 @@ export default function Reels() {
   const toggleLike = (id) => {
     setReels((rs) =>
       rs.map((r) =>
-        r.id === id
-          ? { ...r, likes: r._liked ? r.likes - 1 : r.likes + 1, _liked: !r._liked }
-          : r
+        r.id === id ? { ...r, likes: (r.likes ?? 0) + (r._liked ? -1 : 1), _liked: !r._liked } : r
       )
     );
   };
@@ -101,12 +114,15 @@ export default function Reels() {
     setReels((rs) => rs.map((r) => (r.id === id ? { ...r, faved: !r.faved } : r)));
   };
 
-  const onDoubleTap = () => {
+  const onDoubleTap = (e) => {
     const now = Date.now();
     if (now - lastTapRef.current < 300) {
       toggleLike(activeId);
-      // heart burst animation
       setHeartBurst(true);
+      setFloatingHearts((h) => [
+        ...h,
+        { id: Date.now(), x: e.clientX, y: e.clientY, emoji: "❤️" },
+      ]);
       setTimeout(() => setHeartBurst(false), 600);
     }
     lastTapRef.current = now;
@@ -124,223 +140,251 @@ export default function Reels() {
     } catch {}
   };
 
-  // upload (< 60s) — makes an object URL
-  const onPick = () => fileRef.current?.click();
-  const onFile = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const url = URL.createObjectURL(file);
-    const probe = document.createElement("video");
-    probe.preload = "metadata";
-    probe.src = url;
-    probe.onloadedmetadata = () => {
-      const dur = probe.duration || 0;
-      if (dur > 60.05) {
-        URL.revokeObjectURL(url);
-        alert("Please upload a video under 60 seconds.");
-        return;
-      }
-      const newReel = {
-        id: "upl-" + Date.now(),
-        src: url,
-        song: "Original Audio",
-        profileName: "@you",
-        profilePic: avatar,
-        caption: "My new reel ✨",
-        likes: 0,
-        comments: [],
-        faved: false,
-      };
-      setReels((rs) => [newReel, ...rs]);
-      setIndex(0);
-      alert("Reel uploaded!");
-    };
-  };
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen text-white bg-black text-lg tracking-wide">
+        <motion.span
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ repeat: Infinity, duration: 1.4 }}
+        >
+          Loading Reels...
+        </motion.span>
+      </div>
+    );
+  }
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black"
-      style={{ marginTop: "2.4cm", height: "calc(100vh - 2.4cm)" }}
+      className="relative w-full overflow-hidden bg-gradient-to-b from-zinc-900 to-black"
+      style={{ marginTop: "2.15cm", height: "calc(100vh - 2.15cm)" }}
     >
       <div className="h-full max-w-md mx-auto flex items-center justify-center px-4">
-        <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-black">
-          {/* ----- video pane ----- */}
+        <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-[0_0_25px_rgba(0,0,0,0.6)] bg-black">
           <AnimatePresence initial={false} mode="wait">
             <motion.div
-              key={active?.id}
+              key={active?.id ?? "empty"}
               className="absolute inset-0"
-              initial={{ opacity: 0, scale: 1.02 }}
+              initial={{ opacity: 0, scale: 1.05 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              {active && (
-                <video
-                  ref={(el) => { if (el) videoRefs.current[active.id] = el; }}
-                  src={active.src}
-                  autoPlay
-                  muted={muted}
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                  onClick={() => setMuted((m) => !m)}
-                  onDoubleClick={onDoubleTap}
-                />
+              {active?.isAd ? (
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-white to-gray-100 text-center p-6"
+                >
+                  <motion.img
+                    src={active.image}
+                    alt={active.title}
+                    className="w-full h-64 object-cover rounded-2xl shadow mb-4"
+                    whileHover={{ scale: 1.03 }}
+                  />
+                  <h2 className="text-xl font-semibold mb-2">{active.title}</h2>
+                  <p className="text-gray-600 mb-3">{active.brand}</p>
+                  <a
+                    href={active.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full transition shadow-lg hover:shadow-xl"
+                  >
+                    {active.cta}
+                  </a>
+                </motion.div>
+              ) : active ? (
+                <>
+                  <motion.video
+                    ref={(el) => {
+                      if (el && active?.id) videoRefs.current[active.id] = el;
+                    }}
+                    src={active.src || active.video}
+                    autoPlay
+                    muted={muted}
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover"
+                    onClick={() => setMuted((m) => !m)}
+                    onDoubleClick={onDoubleTap}
+                    initial={{ scale: 1.05 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/50" />
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full text-white">No reels.</div>
               )}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-black/40" />
             </motion.div>
           </AnimatePresence>
 
-          {/* heart burst on double tap */}
           <AnimatePresence>
-            {heartBurst && (
+            {floatingHearts.map((h) => (
               <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1.2, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ duration: 0.6 }}
+                key={h.id}
+                className="absolute text-4xl pointer-events-none select-none"
+                style={{ left: h.x - 15, top: h.y - 15 }}
+                initial={{ opacity: 1, y: 0, scale: 1 }}
+                animate={{ opacity: 0, y: -100, scale: 1.8 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2 }}
+                onAnimationComplete={() =>
+                  setFloatingHearts((arr) => arr.filter((x) => x.id !== h.id))
+                }
               >
-                <motion.div className="text-pink-500" style={{ fontSize: 96 }}>
-                  ❤️
-                </motion.div>
+                {h.emoji}
               </motion.div>
-            )}
+            ))}
           </AnimatePresence>
 
-          {/* top: song name */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md text-white text-sm px-4 py-2 rounded-full border border-white/20 shadow">
-            {active?.song || "Original Audio"}
-          </div>
-
-          {/* left rail: mute / like / comments / share / upload */}
-          <div className="absolute left-3 top-3 bottom-3 flex flex-col justify-between">
-            <div className="flex flex-col gap-3">
-              <button
-                onClick={() => setMuted((m) => !m)}
-                className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition shadow"
-                title={muted ? "Unmute" : "Mute"}
-              >
-                {muted ? <VolumeX /> : <Volume2 />}
-              </button>
-
-              <button
-                onClick={() => toggleLike(activeId)}
-                className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition shadow group"
-                title="Like"
-              >
-                <Flame className="group-hover:scale-110 transition" />
-                <span className="block text-xs mt-1 opacity-90 text-center">{active?.likes ?? 0}</span>
-              </button>
-
-              <button
-                onClick={() => setShowComments(true)}
-                className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition shadow"
-                title="Comments"
-              >
-                <MessageCircle />
-                <span className="block text-xs mt-1 opacity-90 text-center">{active?.comments?.length ?? 0}</span>
-              </button>
-
-              <button
-                onClick={share}
-                className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition shadow"
-                title="Share"
-              >
-                <Share2 />
-              </button>
+          {!active?.isAd && active && (
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white/10 backdrop-blur-md text-white text-sm px-5 py-2 rounded-full border border-white/20 shadow-md">
+              <Music2 className="animate-pulse" size={16} />
+              <span>{active?.song || "Original Audio"}</span>
             </div>
+          )}
 
-            <div className="pb-1">
-              <button
-                onClick={onPick}
-                className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition shadow flex items-center gap-2"
-                title="Upload reel (<60s)"
-              >
-                <Upload /><span className="text-xs">Upload</span>
-              </button>
-              <input ref={fileRef} type="file" accept="video/*" className="hidden" onChange={onFile} />
+          {!active?.isAd && active && (
+            <div className="absolute left-3 top-3 bottom-3 flex flex-col justify-between">
+              <div className="flex flex-col gap-3">
+                {[
+                  {
+                    icon: muted ? <VolumeX /> : <Volume2 />,
+                    onClick: () => setMuted((m) => !m),
+                    title: "Mute",
+                  },
+                  {
+                    icon: <Flame />,
+                    onClick: () => toggleLike(activeId),
+                    title: "Like",
+                    label: active?.likes ?? 0,
+                  },
+                  {
+                    icon: <MessageCircle />,
+                    onClick: () => setShowComments(true),
+                    title: "Comments",
+                    label: active?.comments?.length ?? 0,
+                  },
+                  { icon: <Share2 />, onClick: share, title: "Share" },
+                ].map((b, i) => (
+                  <motion.button
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.9 }}
+                    key={i}
+                    onClick={b.onClick}
+                    className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition shadow"
+                    title={b.title}
+                  >
+                    {b.icon}
+                    {b.label !== undefined && (
+                      <span className="block text-xs mt-1 opacity-90 text-center">{b.label}</span>
+                    )}
+                  </motion.button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* right rail: prev / favorite / next (⭐ here, not on video) */}
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={prev}
               disabled={index === 0}
               className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 disabled:opacity-40 shadow transition"
-              title="Previous"
             >
               <ChevronUp />
-            </button>
+            </motion.button>
 
-            <button
-              onClick={() => toggleFav(activeId)}
-              className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition"
-              title="Save to favourites"
-            >
-              {active?.faved ? <Star className="text-yellow-300" /> : <StarOff />}
-            </button>
+            {!active?.isAd && active && (
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => toggleFav(activeId)}
+                className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition"
+                title="Save to favourites"
+              >
+                {active?.faved ? <Star className="text-yellow-300" /> : <StarOff />}
+              </motion.button>
+            )}
 
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={next}
               disabled={index === reels.length - 1}
               className="p-3 rounded-xl bg-white/15 border border-white/20 text-white hover:bg-white/25 disabled:opacity-40 shadow transition"
-              title="Next"
             >
               <ChevronDown />
-            </button>
+            </motion.button>
           </div>
 
-          {/* bottom: profile + caption */}
-          <div className="absolute bottom-4 left-4 right-4 text-white">
-            <div className="flex items-center gap-3">
-              {active?.profilePic ? (
-                <img
-                  src={active.profilePic}
-                  alt="profile"
-                  className="w-10 h-10 rounded-full object-cover border border-white/30 shadow"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <User />
+          {!active?.isAd && active && (
+            <div className="absolute bottom-4 left-4 right-4 text-white">
+              <div className="flex items-center gap-3">
+                {active?.profilePic ? (
+                  <img
+                    src={active.profilePic}
+                    alt="profile"
+                    className="w-10 h-10 rounded-full object-cover border border-white/30 shadow"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <User />
+                  </div>
+                )}
+                <div className="backdrop-blur-sm bg-black/25 px-3 py-1.5 rounded-full border border-white/10 shadow">
+                  <span className="font-semibold">{active?.profileName || "@user"}</span>
                 </div>
-              )}
-              <div className="backdrop-blur-sm bg-black/25 px-3 py-1.5 rounded-full border border-white/10 shadow">
-                <span className="font-semibold">{active?.profileName || "@user"}</span>
               </div>
+              <p className="mt-2 max-w-[75%] text-sm leading-relaxed drop-shadow">{active?.caption}</p>
             </div>
-            <p className="mt-2 max-w-[70%] text-sm leading-relaxed drop-shadow">
-              {active?.caption}
-            </p>
-          </div>
+          )}
         </div>
       </div>
 
-      {/* comments drawer */}
       <AnimatePresence>
         {showComments && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black/60 z-40"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setShowComments(false)}
             />
             <motion.aside
               className="fixed right-0 top-[2.4cm] bottom-0 w-full max-w-md bg-white z-50 shadow-2xl flex flex-col"
-              initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 80, damping: 12 }}
             >
               <div className="p-4 border-b flex items-center justify-between">
                 <h3 className="font-semibold">Comments</h3>
-                <button onClick={() => setShowComments(false)} className="px-3 py-1 rounded hover:bg-gray-100">×</button>
+                <button
+                  onClick={() => setShowComments(false)}
+                  className="px-3 py-1 rounded hover:bg-gray-100"
+                >
+                  ×
+                </button>
               </div>
+
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                {active?.comments?.length
-                  ? active.comments.map((c, i) => (
-                      <div key={i} className="bg-gray-50 border rounded-xl px-3 py-2">{c}</div>
-                    ))
-                  : <p className="text-gray-500">No comments yet.</p>}
+                {active?.comments?.length ? (
+                  active.comments.map((c, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-gray-50 border rounded-xl px-3 py-2 shadow-sm"
+                    >
+                      {c}
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No comments yet.</p>
+                )}
               </div>
+
               <div className="p-3 border-t flex gap-2">
                 <input
                   value={newComment}
@@ -354,7 +398,7 @@ export default function Reels() {
                     if (!txt) return;
                     setReels((rs) =>
                       rs.map((r) =>
-                        r.id === activeId ? { ...r, comments: [...r.comments, txt] } : r
+                        r.id === activeId ? { ...r, comments: [...(r.comments || []), txt] } : r
                       )
                     );
                     setNewComment("");

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "r1",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@street.vibes",
+    "profilePic": "https://randomuser.me/api/portraits/men/45.jpg",
+    "song": "Lo-Fi Chill – Cloud Tape",
+    "caption": "Sunset shots never miss 🌇",
+    "likes": 450,
+    "comments": ["🔥🔥", "smooth!", "this vibe >>"],
+    "faved": false
+  },
+  {
+    "id": "r2",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@urban.foodie",
+    "profilePic": "https://randomuser.me/api/portraits/women/21.jpg",
+    "song": "Indie Beats – Home Flavor",
+    "caption": "Street food diaries 🌮",
+    "likes": 978,
+    "comments": ["delicious!", "where is this?", "🔥"],
+    "faved": true
+  },
+  {
+    "id": "r3",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@nightscapes",
+    "profilePic": "https://randomuser.me/api/portraits/men/77.jpg",
+    "song": "Midnight Drive – Neon Flow",
+    "caption": "City lights and long drives 🚗💨",
+    "likes": 312,
+    "comments": ["vibes ✨", "clean edit!", "🔥🔥🔥"],
+    "faved": false
+  },
+  {
+    "id": "r4",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@mountain.hike",
+    "profilePic": "https://randomuser.me/api/portraits/women/33.jpg",
+    "song": "Nature Flow – Calm Mind",
+    "caption": "Peak moments ⛰️ #adventure",
+    "likes": 156,
+    "comments": ["breathtaking", "awesome!", "this is goals!"],
+    "faved": false
+  },
+  {
+    "id": "r5",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@fitness.daily",
+    "profilePic": "https://randomuser.me/api/portraits/men/64.jpg",
+    "song": "Motivation Mode – Hard Beat",
+    "caption": "No excuses 💪",
+    "likes": 680,
+    "comments": ["let’s go!", "solid!", "🔥"],
+    "faved": false
+  },
+  {
+    "id": "r6",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@coffee.aura",
+    "profilePic": "https://randomuser.me/api/portraits/women/55.jpg",
+    "song": "Morning Vibes – Latte Mood",
+    "caption": "Because coffee ☕",
+    "likes": 920,
+    "comments": ["so aesthetic", "latte love!", "❤️"],
+    "faved": false
+  },
+  {
+    "id": "r7",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@tech.simplified",
+    "profilePic": "https://randomuser.me/api/portraits/men/15.jpg",
+    "song": "Digital Pulse – Synth Code",
+    "caption": "AI in 30 seconds 🤖",
+    "likes": 320,
+    "comments": ["cool info", "smart edit", "🔥🔥"],
+    "faved": true
+  },
+  {
+    "id": "r8",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@art.n.motion",
+    "profilePic": "https://randomuser.me/api/portraits/women/12.jpg",
+    "song": "Dream Pop – Slow Echo",
+    "caption": "Brush strokes of emotion 🎨",
+    "likes": 710,
+    "comments": ["wow", "smooth blend", "🔥🔥🔥🔥"],
+    "faved": false
+  },
+  {
+    "id": "r9",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@petplanet",
+    "profilePic": "https://randomuser.me/api/portraits/women/60.jpg",
+    "song": "Cute Loops – Paw Paw",
+    "caption": "Dogs are pure happiness 🐶",
+    "likes": 1040,
+    "comments": ["aww", "love this!", "❤️❤️"],
+    "faved": true
+  },
+  {
+    "id": "r10",
+    "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "profileName": "@ocean.vibes",
+    "profilePic": "https://randomuser.me/api/portraits/men/32.jpg",
+    "song": "Sea Breeze – Chillwave",
+    "caption": "The ocean always heals 🌊",
+    "likes": 220,
+    "comments": ["peaceful", "mesmerizing!", "💙"],
+    "faved": false
+  }
+]
