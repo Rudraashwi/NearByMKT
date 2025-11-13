@@ -25,6 +25,7 @@ import Reels from "./sections/Reels";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Notification from "./components/Notification";
+import ChatPage from "./pages/ChatPage";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/food" element={<Food />} />
             <Route path="/groceries" element={<Grocery />} />
             <Route path="/reels" element={<Reels />} />
+            <Route path="/chat/:id" element={<ChatPage />} />
           </Routes>
         </main>
 

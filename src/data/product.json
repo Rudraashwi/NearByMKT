@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "name": "FrameInGo - Decor & Gifts",
+    "category": "Home Decor & Gifts",
+    "image": "https://lh3.googleusercontent.com/p/AF1QipPSCfQF6vSu7JuyPJx7fEXQ6sFYHmnmNXAsl33L=s1360-w1360-h1020-rw",
+    "rating": 4.6,
+    "distance": "0.5 km",
+    "address": "MG Road, Near City Mall, Pune",
+    "status": "Open Now",
+    "phone": "+919876543210",
+    "paymentMethods": ["Cash", "UPI", "Credit Card"],
+    "services": ["Home Delivery", "Gift Wrapping", "Custom Orders"],
+    "offer": {
+      "title": "15% OFF on orders above ₹1000",
+      "validUntil": "2025-09-30"
+    },
+    "products": [
+      {
+        "id": "p1",
+        "name": "Wired Headphones",
+        "price": 249,
+        "oldPrice": 399,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxt6jEhdEFx4DRA3ggKs_LGsH_cTmYw7BQIkIN_E2Vle0cO-UehXS8vjg6QDAe9eRX4S8qWoBJAWUkoSnEMBoNa1X1PZoYXxJP2U_VPjR6YnCmuqQSEPYaWFS-32fo9h3wLwlM7TQ=w141-h176-n-k-no-nu"
+      },
+      {
+        "id": "p2",
+        "name": "Analog Watch",
+        "price": 1999,
+        "oldPrice": 2499,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxD4GRPztDW_M-bhz9Ca5sGKmnC3EIq0m60InZuivhYGOGsrinb65dAle0aXZd2DahcaHC0wGeYWGKKPtoPp0aVSXY7AEGBhaaBbmbw49_wimd0C9Lg6daROiGOQKkFXQpj_nSjog=w141-h101-n-k-no-nu"
+      },
+      {
+        "id": "p3",
+        "name": "Ceramic Photo Frame",
+        "price": 549,
+        "oldPrice": 749,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSycr9t6loAM2ltsxHIM_bTnw-JGXCQ6USjJxSinoHzJyy9WXx5mayGY1l1XCs5hCwFVjPjhNLthB9pa2kkxWIj5PRUWkb4jDqh25tbRNMC6ipaXz6NSO6a_WnRD2zBX2XHYQt-2=w141-h176-n-k-no-nu"
+      }
+    ],
+    "reviews": [
+      { "id": "r1", "user": "Aman", "rating": 5, "text": "Lovely frames and quick shipping. Highly recommended!" },
+      { "id": "r2", "user": "Priya", "rating": 4, "text": "Good quality. Price is fair." }
+    ],
+    "chatEnabled": true
+  },
+  {
+    "id": 2,
+    "name": "Desire - Gifts & Shaddi Cards",
+    "category": "Wedding & Event Gifts",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxZnZ-X3_4TdDYUD9njr6zUf6BqI_hNbFgD_JPkpeSLyrm1Q77Lv4E_dVV40PGfSOehxqMM81UGvpneAQxeiknXqWgcd8dXKTakJ4ZKHLFoQ-Fw4mO4hfPtnzg1EMPaaQHTCRQX=w141-h176-n-k-no-nu",
+    "rating": 4.8,
+    "distance": "0.3 km",
+    "address": "Nagar Nigam Road, Near Market Square",
+    "status": "Open Now",
+    "phone": "+918945612378",
+    "paymentMethods": ["Cash", "UPI"],
+    "services": ["Wedding Invites", "Customized Gifts", "Bulk Orders"],
+    "offer": {
+      "title": "Buy 5 Wedding Cards, Get 1 Free",
+      "validUntil": "2025-12-31"
+    },
+    "products": [
+      { "id": "p1", "name": "Luxury Shaddi Card", "price": 79, "oldPrice": 99, "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxD4GRPztDW_M-bhz9Ca5sGKmnC3EIq0m60InZuivhYGOGsrinb65dAle0aXZd2DahcaHC0wGeYWGKKPtoPp0aVSXY7AEGBhaaBbmbw49_wimd0C9Lg6daROiGOQKkFXQpj_nSjog=w141-h101-n-k-no-nu" },
+      { "id": "p2", "name": "Gift Box Combo", "price": 499, "oldPrice": 599, "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSycr9t6loAM2ltsxHIM_bTnw-JGXCQ6USjJxSinoHzJyy9WXx5mayGY1l1XCs5hCwFVjPjhNLthB9pa2kkxWIj5PRUWkb4jDqh25tbRNMC6ipaXz6NSO6a_WnRD2zBX2XHYQt-2=w141-h176-n-k-no-nu" },
+      { "id": "p3", "name": "Decorative Candle", "price": 249, "oldPrice": 349, "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxt6jEhdEFx4DRA3ggKs_LGsH_cTmYw7BQIkIN_E2Vle0cO-UehXS8vjg6QDAe9eRX4S8qWoBJAWUkoSnEMBoNa1X1PZoYXxJP2U_VPjR6YnCmuqQSEPYaWFS-32fo9h3wLwlM7TQ=w141-h176-n-k-no-nu" }
+    ],
+    "reviews": [
+      { "id": "r1", "user": "Ritika", "rating": 5, "text": "Perfect designs for weddings and gifts. Love it!" },
+      { "id": "r2", "user": "Mohit", "rating": 4, "text": "Affordable and elegant cards." }
+    ],
+    "chatEnabled": true
+  },
+  {
+    "id": 3,
+    "name": "Gift Planet",
+    "category": "Gifting & Accessories",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSycr9t6loAM2ltsxHIM_bTnw-JGXCQ6USjJxSinoHzJyy9WXx5mayGY1l1XCs5hCwFVjPjhNLthB9pa2kkxWIj5PRUWkb4jDqh25tbRNMC6ipaXz6NSO6a_WnRD2zBX2XHYQt-2=w141-h176-n-k-no-nu",
+    "rating": 4.5,
+    "distance": "1.1 km",
+    "address": "Station Road, Pune",
+    "status": "Closed",
+    "phone": "+919876512234",
+    "paymentMethods": ["Cash", "UPI", "Net Banking"],
+    "services": ["Gift Wrapping", "Home Delivery"],
+    "offer": {
+      "title": "10% OFF on all items",
+      "validUntil": "2025-08-30"
+    },
+    "products": [
+      { "id": "p1", "name": "Photo Mug", "price": 299, "oldPrice": 399, "image": "https://via.placeholder.com/300x220?text=Photo+Mug" },
+      { "id": "p2", "name": "Greeting Card", "price": 99, "oldPrice": 149, "image": "https://via.placeholder.com/300x220?text=Card" }
+    ],
+    "reviews": [
+      { "id": "r1", "user": "Riya", "rating": 5, "text": "Very creative gifts. Good packaging." },
+      { "id": "r2", "user": "Ankit", "rating": 4, "text": "Good shop, fast delivery." }
+    ],
+    "chatEnabled": true
+  },
+  {
+    "id": 4,
+    "name": "Urban Frames",
+    "category": "Photo Frames",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxt6jEhdEFx4DRA3ggKs_LGsH_cTmYw7BQIkIN_E2Vle0cO-UehXS8vjg6QDAe9eRX4S8qWoBJAWUkoSnEMBoNa1X1PZoYXxJP2U_VPjR6YnCmuqQSEPYaWFS-32fo9h3wLwlM7TQ=w141-h176-n-k-no-nu",
+    "rating": 4.2,
+    "distance": "0.7 km",
+    "address": "City Plaza, Shop 23, Pune",
+    "status": "Open Now",
+    "phone": "+919011223344",
+    "paymentMethods": ["UPI", "Card"],
+    "services": ["Custom Frames", "3D Frames"],
+    "offer": { "title": "Buy 2, Get 1 Free", "validUntil": "2025-10-31" },
+    "products": [],
+    "reviews": [],
+    "chatEnabled": true
+  },
+  {
+    "id": 5,
+    "name": "Crafty Hands",
+    "category": "Handmade Items",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxD4GRPztDW_M-bhz9Ca5sGKmnC3EIq0m60InZuivhYGOGsrinb65dAle0aXZd2DahcaHC0wGeYWGKKPtoPp0aVSXY7AEGBhaaBbmbw49_wimd0C9Lg6daROiGOQKkFXQpj_nSjog=w141-h101-n-k-no-nu",
+    "rating": 4.9,
+    "distance": "1.3 km",
+    "address": "Baner Road, Pune",
+    "status": "Open Now",
+    "phone": "+919800000123",
+    "paymentMethods": ["Cash", "UPI"],
+    "services": ["Custom Orders", "Gift Packaging"],
+    "offer": { "title": "20% OFF Handmade Frames", "validUntil": "2025-11-15" },
+    "products": [],
+    "reviews": [],
+    "chatEnabled": true
+  }
+]
