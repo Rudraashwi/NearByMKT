@@ -15,6 +15,7 @@
       "title": "15% OFF on orders above ₹1000",
       "validUntil": "2025-09-30"
     },
+    "businessDescription": "FrameInGo offers premium custom frames, personalized gifts, and décor items with fast service and high-quality craftsmanship. Perfect for home decoration, gifting needs, and special occasions.",
     "products": [
       {
         "id": "p1",
@@ -60,6 +61,7 @@
       "title": "Buy 5 Wedding Cards, Get 1 Free",
       "validUntil": "2025-12-31"
     },
+    "businessDescription": "Desire specializes in premium wedding cards, personalized gifts, and elegant event accessories. Known for creative designs and quality work, it’s the perfect place for weddings and celebrations.",
     "products": [
       { "id": "p1", "name": "Luxury Shaddi Card", "price": 79, "oldPrice": 99, "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxD4GRPztDW_M-bhz9Ca5sGKmnC3EIq0m60InZuivhYGOGsrinb65dAle0aXZd2DahcaHC0wGeYWGKKPtoPp0aVSXY7AEGBhaaBbmbw49_wimd0C9Lg6daROiGOQKkFXQpj_nSjog=w141-h101-n-k-no-nu" },
       { "id": "p2", "name": "Gift Box Combo", "price": 499, "oldPrice": 599, "image": "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSycr9t6loAM2ltsxHIM_bTnw-JGXCQ6USjJxSinoHzJyy9WXx5mayGY1l1XCs5hCwFVjPjhNLthB9pa2kkxWIj5PRUWkb4jDqh25tbRNMC6ipaXz6NSO6a_WnRD2zBX2XHYQt-2=w141-h176-n-k-no-nu" },
@@ -87,6 +89,7 @@
       "title": "10% OFF on all items",
       "validUntil": "2025-08-30"
     },
+    "businessDescription": "Gift Planet offers a wide range of creative gifts and accessories for all occasions. Known for fast delivery, great packaging, and unique gifting options that customers love.",
     "products": [
       { "id": "p1", "name": "Photo Mug", "price": 299, "oldPrice": 399, "image": "https://via.placeholder.com/300x220?text=Photo+Mug" },
       { "id": "p2", "name": "Greeting Card", "price": 99, "oldPrice": 149, "image": "https://via.placeholder.com/300x220?text=Card" }
@@ -110,6 +113,7 @@
     "paymentMethods": ["UPI", "Card"],
     "services": ["Custom Frames", "3D Frames"],
     "offer": { "title": "Buy 2, Get 1 Free", "validUntil": "2025-10-31" },
+    "businessDescription": "Urban Frames provides high-quality photo frames, custom designs, and 3D framing options. A great place for personalized décor and memorable gifts.",
     "products": [],
     "reviews": [],
     "chatEnabled": true
@@ -127,6 +131,7 @@
     "paymentMethods": ["Cash", "UPI"],
     "services": ["Custom Orders", "Gift Packaging"],
     "offer": { "title": "20% OFF Handmade Frames", "validUntil": "2025-11-15" },
+    "businessDescription": "Crafty Hands creates beautifully handmade items, custom décor, and unique gifts. Known for attention to detail and excellent craftsmanship, perfect for special occasions.",
     "products": [],
     "reviews": [],
     "chatEnabled": true

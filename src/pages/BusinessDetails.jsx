@@ -163,75 +163,105 @@ export default function BusinessDetails() {
 
             {/* Shop basic info */}
             <div className="mt-4 bg-white rounded-2xl p-4 shadow">
-              <h2 className="text-2xl font-semibold">{shop.name}</h2>
-              <p className="text-sm text-gray-500 mt-1">{shop.category}</p>
 
-              <div className="mt-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1 text-yellow-500">
-                    <Star className="w-5 h-5" />
-                    <span className="font-semibold">{shop.rating}</span>
-                  </div>
-                  <div className="text-sm text-gray-500">({shop.reviews?.length ?? 0} reviews)</div>
-                </div>
-                <div className="text-sm text-gray-500">{shop.distance}</div>
-              </div>
+  <h2 className="text-2xl font-semibold">{shop.name}</h2>
+  <p className="text-sm text-gray-500 mt-1">{shop.category}</p>
 
-              {/* location & status */}
-              <div className="mt-4 flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-blue-600" />
-                <div>
-                  <div className="text-sm font-medium">{shop.address}</div>
-                  <div className="text-xs mt-1">
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                        shop.status === "Open Now" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {shop.status}
-                    </span>
-                  </div>
-                </div>
-              </div>
+  <div className="mt-3 flex items-center justify-between">
+    <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1 text-yellow-500">
+        <Star className="w-5 h-5" />
+        <span className="font-semibold">{shop.rating}</span>
+      </div>
+      <div className="text-sm text-gray-500">
+        ({shop.reviews?.length ?? 0} reviews)
+      </div>
+    </div>
+    <div className="text-sm text-gray-500">{shop.distance}</div>
+  </div>
 
-              {/* payment methods */}
-              <div className="mt-4">
-                <div className="text-sm font-semibold mb-2 flex items-center gap-2">
-                  <CreditCard className="w-4 h-4 text-blue-600" /> Payment
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {(shop.paymentMethods || []).map((p) => (
-                    <span key={p} className="text-xs px-3 py-1 rounded-full bg-blue-50 text-blue-600">
-                      {p}
-                    </span>
-                  ))}
-                </div>
-              </div>
+  {/* location & status */}
+  <div className="mt-4 flex items-center gap-3">
+    <MapPin className="w-5 h-5 text-blue-600" />
+    <div>
+      <div className="text-sm font-medium">{shop.address}</div>
+      <div className="text-xs mt-1">
+        <span
+          className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+            shop.status === "Open Now"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {shop.status}
+        </span>
+      </div>
+    </div>
+  </div>
 
-              {/* services */}
-              <div className="mt-4">
-                <div className="text-sm font-semibold mb-2 flex items-center gap-2">
-                  <Gift className="w-4 h-4 text-blue-600" /> Services
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {(shop.services || []).map((s) => (
-                    <span key={s} className="text-xs px-3 py-1 rounded-full bg-gray-100">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
+  {/* payment */}
+  <div className="mt-4">
+    <div className="text-sm font-semibold mb-2 flex items-center gap-2">
+      <CreditCard className="w-4 h-4 text-blue-600" /> Payment
+    </div>
+    <div className="flex flex-wrap gap-2">
+      {(shop.paymentMethods || []).map((p) => (
+        <span
+          key={p}
+          className="text-xs px-3 py-1 rounded-full bg-blue-50 text-blue-600"
+        >
+          {p}
+        </span>
+      ))}
+    </div>
+  </div>
 
-              {/* offer */}
-              {shop.offer?.title && (
-                <div className="mt-4 bg-orange-50 border border-orange-100 p-3 rounded-lg">
-                  <div className="text-sm font-semibold text-orange-700">{shop.offer.title}</div>
-                  {shop.offer.validUntil && (
-                    <div className="text-xs text-gray-500 mt-1">Valid until {shop.offer.validUntil}</div>
-                  )}
-                </div>
-              )}
-            </div>
+  {/* services */}
+  <div className="mt-4">
+    <div className="text-sm font-semibold mb-2 flex items-center gap-2">
+      <Gift className="w-4 h-4 text-blue-600" /> Services
+    </div>
+    <div className="flex flex-wrap gap-2">
+      {(shop.services || []).map((s) => (
+        <span
+          key={s}
+          className="text-xs px-3 py-1 rounded-full bg-gray-100"
+        >
+          {s}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  {/* offer */}
+  {shop.offer?.title && (
+    <div className="mt-4 bg-orange-50 border border-orange-100 p-3 rounded-lg">
+      <div className="text-sm font-semibold text-orange-700">
+        {shop.offer.title}
+      </div>
+      {shop.offer.validUntil && (
+        <div className="text-xs text-gray-500 mt-1">
+          Valid until {shop.offer.validUntil}
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* 🌟 NEW — Business Description */}
+  {shop.businessDescription && (
+    <div className="mt-5 bg-blue-50 border border-blue-100 p-4 rounded-xl">
+      <h3 className="text-sm font-bold text-blue-700 mb-1">
+        Business Details :-
+      </h3>
+
+      <p className="text-sm text-gray-700 leading-relaxed">
+        {shop.businessDescription}
+      </p>
+    </div>
+  )}
+
+</div>
+
 
             {/* small CTA: visit / call / chat */}
             <div className="mt-4 flex gap-3">
