@@ -26,6 +26,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Notification from "./components/Notification";
 import ChatPage from "./pages/ChatPage";
+import ProductPage from "./pages/ProductPage";
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
             <Route path="/groceries" element={<Grocery />} />
             <Route path="/reels" element={<Reels />} />
             <Route path="/chat/:id" element={<ChatPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
           </Routes>
         </main>
 

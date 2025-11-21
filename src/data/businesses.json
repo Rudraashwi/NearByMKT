@@ -142,4 +142,5 @@
     "reviews": [{ "id": "r1", "user": "Deepak", "rating": 4, "text": "Affordable tech accessories." }],
     "chatEnabled": true
   }
+  
 ]

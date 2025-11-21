@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "name": "MH40 Wireless",
+    "subtitle": "Wireless Over-Ear Headphones",
+    "price": 399,
+    "currency": "USD",
+    "description": "Experience high-fidelity wireless sound with the MH40 Wireless Over-Ear Headphones. Designed with premium materials including coated canvas, aluminum, and lambskin leather. Features 40mm titanium drivers, passive noise isolation, dual microphone array, and up to 30 hours of battery life.",
+    "images": [
+      "/p6.png",
+      "/p7.png",
+      "/p8.png"
+    ],
+    "colors": [
+      { "name": "Navy Blue", "hex": "#112244", "image": "/p6.png" },
+      { "name": "Black", "hex": "#000000", "image": "/p7.png" },
+      { "name": "Sand", "hex": "#B8A99A", "image": "/p8.png" }
+    ],
+    "features": [
+      "Passive noise isolation",
+      "Up to 30 hours battery life",
+      "Bluetooth 5.2",
+      "Dual microphone array",
+      "40mm titanium drivers"
+    ],
+    "engravable": true,
+    "engravingPrice": 30,
+    "specifications": {
+      "drivers": "40mm titanium",
+      "battery": "Up to 30 hours",
+      "connectivity": "Bluetooth 5.2 + 3.5mm wired",
+      "weight": "250 grams",
+      "materials": "Aluminum, coated canvas, lambskin leather",
+      "warranty": "1 year manufacturer warranty"
+    },
+    "relatedProducts": [
+      { "id": 101, "name": "MH40 Carry Case", "price": 49, "image": "/p8.png" },
+      { "id": 102, "name": "Replacement Ear Pads", "price": 29, "image": "/p6.png" }
+    ],
+    "stock": "In Stock",
+    "tags": ["headphones", "wireless", "premium"],
+    "meta": { "sku": "MH40-US", "brand": "MasterAudio" },
+    "reviews": [
+      { "id": "r1", "user": "Aman", "rating": 5, "text": "Excellent sound and build quality." },
+      { "id": "r2", "user": "Priya", "rating": 4, "text": "Great comfort, battery life is solid." }
+    ]
+  },
+
+  {
+    "id": 2,
+    "name": "Urban Aroma Perfume",
+    "subtitle": "Signature long-lasting fragrance",
+    "price": 79,
+    "currency": "USD",
+    "description": "A premium long-lasting fragrance crafted with top notes of bergamot and amber.",
+    "images": ["/ua1.png"],
+    "colors": [],
+    "features": ["Long-lasting", "Premium packaging"],
+    "engravable": false,
+    "specifications": { "volume": "100ml" },
+    "relatedProducts": [],
+    "stock": "Limited stock",
+    "tags": ["perfume"],
+    "meta": { "sku": "UA-100" },
+    "reviews": []
+  }
+]
