@@ -22,6 +22,7 @@ export default function ProductPage() {
     const [fav, setFav] = useState(false);
     const [specOpen, setSpecOpen] = useState(false);
 
+    // LOAD PRODUCT (API + fallback JSON)
     useEffect(() => {
         let mounted = true;
         async function load() {
@@ -31,18 +32,17 @@ export default function ProductPage() {
                 const json = await res.json();
                 if (!mounted) return;
                 setProduct(json);
-                setSelectedColor((json.colors && json.colors[0]) || null);
+                setSelectedColor(json.colors?.[0] || null);
                 setMainIdx(0);
+
             } catch (e) {
-                // fallback to local JSON
                 try {
-                    // local file placed at src/data/productPage.json
                     const json = await import("../data/productPage.json");
                     const list = json.default ?? json;
                     const p = list.find((x) => Number(x.id) === productId) || list[0];
                     if (!mounted) return;
                     setProduct(p);
-                    setSelectedColor((p.colors && p.colors[0]) || null);
+                    setSelectedColor(p.colors?.[0] || null);
                     setMainIdx(0);
                 } catch (err) {
                     console.error("Failed to load product:", err);
@@ -50,39 +50,30 @@ export default function ProductPage() {
             }
         }
         load();
-        return () => {
-            mounted = false;
-        };
+        return () => (mounted = false);
     }, [productId]);
 
-    // derived display images depending on selected color (if color has image)
+    // IMAGES
     const displayImages = useMemo(() => {
         if (!product) return [];
         if (selectedColor && selectedColor.image) {
-            // Move color image to front if provided
-            const remaining = product.images.filter((i) => i !== selectedColor.image);
-            return [selectedColor.image, ...remaining];
+            const rest = product.images.filter((i) => i !== selectedColor.image);
+            return [selectedColor.image, ...rest];
         }
         return product.images || [];
     }, [product, selectedColor]);
 
-    useEffect(() => {
-        setMainIdx(0);
-    }, [selectedColor]);
+    useEffect(() => setMainIdx(0), [selectedColor]);
 
     if (!product) {
         return (
-            <div
-                className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0b1220] to-[#03050a]"
-                style={{ marginTop: "2.4cm" }}
-            >
-                <div className="text-gray-300">Loading product...</div>
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-gray-500">Loading product...</div>
             </div>
         );
     }
 
     const onAddToCart = () => {
-        // placeholder — integrate real cart API later
         const payload = {
             productId: product.id,
             qty,
@@ -90,319 +81,355 @@ export default function ProductPage() {
             color: selectedColor?.name || null,
         };
         console.log("Add to cart:", payload);
-        // TODO: POST /api/cart
-        alert("Added to cart (demo). Check console for payload.");
+        alert("Added to cart (demo)");
     };
 
     const toggleFav = () => setFav((s) => !s);
 
     return (
-        <div
-            className="min-h-screen bg-linear-to-b  from-gray-500 to-blue-100 py-12"
-            style={{ marginTop: "0.9cm" }}
-        >
-            <div className="max-w-[1200px] mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                    {/* Left: gallery */}
-                    <div className="space-y-4">
-                        <div className="relative bg-gray-200 rounded-2xl p-4 lg:p-6 shadow-2xl">
-                            <div className="absolute -left-6 -top-6 hidden lg:block">
-                                <div className="text-xs text-gray-400">LIVE</div>
-                            </div>
+        <div className="w-full bg-gray-100 min-h-screen pt-20 pb-20">
+            <div className="max-w-10xl mx-auto px-4 lg:px-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
+                    {/* ---------------- LEFT: IMAGE GALLERY ---------------- */}
+                    <div>
+
+                        {/* MAIN IMAGE BOX */}
+                        <div className="relative bg-white rounded-xl shadow-lg border p-4">
                             <AnimatePresence mode="wait">
                                 <motion.div
-                                    key={displayImages[mainIdx] || mainIdx}
+                                    key={displayImages[mainIdx]}
                                     initial={{ opacity: 0, scale: 0.98 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.99 }}
-                                    transition={{ duration: 0.35 }}
-                                    className="w-full flex items-center justify-center"
+                                    exit={{ opacity: 0, scale: 0.97 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="w-full"
                                 >
-                                    {/* Hero image container: responsive heights */}
-                                    <div className="w-full h-[420px] sm:h-[460px] md:h-[520px] lg:h-[520px] flex items-center justify-center rounded-xl overflow-hidden bg-white/5">
+                                    <div className="w-full h-[450px] lg:h-[520px] flex items-center justify-center rounded-xl overflow-hidden bg-gray-50">
                                         <img
                                             src={displayImages[mainIdx]}
                                             alt={product.name}
-                                            className="w-full h-full object-cover rounded-xl select-none"
+                                            className="w-full h-full object-contain select-none"
                                             draggable={false}
                                         />
                                     </div>
                                 </motion.div>
                             </AnimatePresence>
 
-                            {/* left/right arrows for big image */}
+                            {/* Arrows */}
                             <button
                                 onClick={() =>
                                     setMainIdx((i) =>
-                                        displayImages.length ? (i - 1 + displayImages.length) % displayImages.length : 0
+                                        displayImages.length
+                                            ? (i - 1 + displayImages.length) %
+                                              displayImages.length
+                                            : 0
                                     )
                                 }
-                                aria-label="previous"
-                                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/8 hover:bg-white/12 transition"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white p-2 shadow rounded-full hover:bg-gray-100"
                             >
-                                <ChevronLeft size={20} className="text-white" />
+                                <ChevronLeft size={20} />
                             </button>
+
                             <button
                                 onClick={() =>
-                                    setMainIdx((i) => (displayImages.length ? (i + 1) % displayImages.length : 0))
+                                    setMainIdx((i) =>
+                                        displayImages.length
+                                            ? (i + 1) % displayImages.length
+                                            : 0
+                                    )
                                 }
-                                aria-label="next"
-                                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/8 hover:bg-white/12 transition"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white p-2 shadow rounded-full hover:bg-gray-100"
                             >
-                                <ChevronRight size={20} className="text-white" />
+                                <ChevronRight size={20} />
                             </button>
                         </div>
 
-                        {/* thumbnails */}
-                        <div className="flex items-center gap-3 overflow-x-auto hide-scrollbar px-1">
+                        {/* THUMBNAILS */}
+                        <div className="flex items-center gap-3 mt-4 overflow-x-auto hide-scrollbar">
                             {displayImages.map((img, i) => (
-                                <motion.button
+                                <button
                                     key={img + i}
                                     onClick={() => setMainIdx(i)}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className={`flex-shrink-0 border rounded-lg p-1 transition ${i === mainIdx ? "ring-2 ring-blue-500" : "hover:scale-105"
-                                        }`}
+                                    className={`border rounded-lg p-1 bg-white shadow-sm transition ${
+                                        i === mainIdx
+                                            ? "border-blue-600 shadow-md"
+                                            : "hover:shadow"
+                                    }`}
                                 >
                                     <img
                                         src={img}
-                                        alt={`thumb-${i}`}
-                                        className={`w-28 h-16 sm:w-32 sm:h-20 object-cover rounded ${i === mainIdx ? "opacity-100" : "opacity-90"}`}
+                                        className="w-24 h-20 object-contain"
+                                        alt=""
                                     />
-                                </motion.button>
+                                </button>
                             ))}
                         </div>
                     </div>
 
-                    {/* Right: details */}
-                    <div className="text-gray-900">
-                        <div className="flex items-start justify-between gap-4">
+                    {/* ---------------- RIGHT: DETAILS ---------------- */}
+                    <div className="bg-white rounded-xl shadow p-6 border">
+
+                        {/* Title + Fav */}
+                        <div className="flex justify-between">
                             <div>
-                                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+                                <h1 className="text-2xl font-bold text-gray-900">
+                                    {product.name}
+                                </h1>
                                 {product.subtitle && (
-                                    <p className="text-sm text-gray-600 mt-2">{product.subtitle}</p>
+                                    <p className="text-sm mt-1 text-gray-600">
+                                        {product.subtitle}
+                                    </p>
                                 )}
                             </div>
 
-                            <div className="ml-auto flex items-center gap-3">
-                                <motion.button
-                                    onClick={toggleFav}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="p-2 rounded-lg bg-white/6 hover:bg-white/10 transition shadow"
-                                    title="Favorite"
-                                >
-                                    <Heart size={18} className={fav ? "text-pink-500" : "text-gray-700"} />
-                                </motion.button>
-                                <motion.button
-                                    onClick={() => alert("Quick reload demo")}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="p-2 rounded-lg bg-white/6 hover:bg-white/10 transition shadow"
-                                    title="Refresh"
-                                >
-                                    <RotateCw size={18} className="text-gray-700" />
-                                </motion.button>
+                            <button
+                                onClick={toggleFav}
+                                className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full"
+                            >
+                                <Heart
+                                    size={20}
+                                    className={fav ? "text-pink-500" : "text-gray-700"}
+                                />
+                            </button>
+                        </div>
+
+                        {/* Price */}
+                        <div className="mt-5">
+                            <div className="text-3xl font-semibold text-gray-900">
+                                ₹{product.price}
+                            </div>
+                            <div className="text-sm text-green-700 font-medium mt-1">
+                                Inclusive of taxes
                             </div>
                         </div>
 
-                        {/* Price & stock */}
-                        <div className="mt-6 flex items-center gap-6">
-                            <div>
-                                <div className="text-2xl font-bold text-gray-900">
-                                    {/* ALWAYS show Rupee sign as requested */}
-                                    ₹{product.price}
-                                </div>
-                                <div className="text-sm text-gray-600">Inclusive of taxes (if applicable)</div>
-                            </div>
-
-                            <div className="ml-auto text-sm text-gray-600">
-                                <span className="px-2 py-1 rounded bg-white/6">
-                                    {product.stock !== undefined ? (product.stock > 0 ? `${product.stock} in stock` : "Out of stock") : "In Stock"}
+                        {/* Stock */}
+                        <div className="text-sm mt-2 text-gray-700">
+                            {product.stock > 0 ? (
+                                <span className="text-green-600">
+                                    {product.stock} items available
                                 </span>
-                            </div>
+                            ) : (
+                                <span className="text-red-600">Out of stock</span>
+                            )}
                         </div>
 
-                        {/* Color selector */}
-                        {product.colors && product.colors.length > 0 && (
+                        {/* Colors */}
+                        {product.colors?.length > 0 && (
                             <div className="mt-6">
-                                <div className="text-sm text-gray-700 mb-2 font-medium">Color</div>
-                                <div className="flex items-center gap-3 flex-wrap">
+                                <div className="font-medium mb-2">Color</div>
+                                <div className="flex gap-3 flex-wrap">
                                     {product.colors.map((c) => (
-                                        <motion.button
+                                        <button
                                             key={c.name}
                                             onClick={() => setSelectedColor(c)}
-                                            whileHover={{ scale: 1.03 }}
-                                            whileTap={{ scale: 0.97 }}
-                                            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition border ${selectedColor?.name === c.name ? "border-blue-500 bg-white/6" : "border-gray-200 bg-white/50"
-                                                }`}
+                                            className={`flex items-center gap-2 px-3 py-2 rounded border transition ${
+                                                selectedColor?.name === c.name
+                                                    ? "border-blue-600 bg-blue-50"
+                                                    : "border-gray-300 bg-white"
+                                            }`}
                                         >
                                             <span
                                                 className="w-5 h-5 rounded"
-                                                style={{ background: c.hex, boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.12)" }}
+                                                style={{
+                                                    background: c.hex,
+                                                    boxShadow:
+                                                        "inset 0 0 0 1px rgba(0,0,0,0.15)",
+                                                }}
                                             />
-                                            <span className="text-sm text-gray-800">{c.name}</span>
-                                        </motion.button>
+                                            {c.name}
+                                        </button>
                                     ))}
                                 </div>
                             </div>
                         )}
 
-                        {/* Engraving & qty */}
-                        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {/* Engraving + Qty */}
+                        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            {/* Engraving */}
                             <div className="sm:col-span-2">
-                                <label className="text-sm text-gray-700">Add Name / Message</label>
-
+                                <label className="text-sm font-medium text-gray-800">
+                                    Add Name / Message
+                                </label>
                                 <input
                                     value={engraving}
                                     onChange={(e) => setEngraving(e.target.value)}
-                                    placeholder="Type the name or message..."
-                                    className="w-full mt-2 bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-gray-900 focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Type here..."
+                                    className="mt-2 w-full border px-3 py-2 rounded-lg text-gray-900 bg-gray-50 focus:ring-2 focus:ring-blue-500"
                                 />
-
                                 {product.engravable && (
-                                    <div className="text-xs text-gray-600 mt-1">
-                                        Extra Cost: {product.engravingPrice ? `₹${product.engravingPrice}` : "-"}
-                                    </div>
+                                    <p className="text-xs text-gray-600 mt-1">
+                                        Extra: ₹{product.engravingPrice || 0}
+                                    </p>
                                 )}
                             </div>
-                        
 
-
-                        <div>
-                            <label className="text-sm text-gray-700">Qty</label>
-                            <div className="mt-2 flex items-center gap-2">
-                                <button
-                                    onClick={() => setQty((q) => Math.max(1, q - 1))}
-                                    className="px-3 py-2 bg-white border border-gray-200 rounded-md"
-                                    aria-label="decrease"
-                                >
-                                    -
-                                </button>
-                                <input
-                                    value={qty}
-                                    onChange={(e) => setQty(Number(e.target.value || 1))}
-                                    className="w-16 text-center bg-white border border-gray-200 rounded px-2 py-2"
-                                />
-                                <button
-                                    onClick={() => setQty((q) => q + 1)}
-                                    className="px-3 py-2 bg-white border border-gray-200 rounded-md"
-                                    aria-label="increase"
-                                >
-                                    +
-                                </button>
+                            {/* Qty */}
+                            <div>
+                                <label className="text-sm font-medium text-gray-800">
+                                    Quantity
+                                </label>
+                                <div className="flex mt-2 items-center gap-2">
+                                    <button
+                                        onClick={() =>
+                                            setQty((q) => Math.max(1, q - 1))
+                                        }
+                                        className="px-3 py-2 rounded border bg-gray-50"
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        value={qty}
+                                        onChange={(e) =>
+                                            setQty(Number(e.target.value || 1))
+                                        }
+                                        className="w-16 text-center border rounded py-2"
+                                    />
+                                    <button
+                                        onClick={() => setQty((q) => q + 1)}
+                                        className="px-3 py-2 rounded border bg-gray-50"
+                                    >
+                                        +
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Add to cart */}
-                    <div className="mt-6 flex items-center gap-4">
-                        <motion.button
-                            onClick={onAddToCart}
-                            whileTap={{ scale: 0.98 }}
-                            className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold shadow-lg transition"
-                        >
-                            <div className="flex items-center justify-center gap-3">
-                                <ShoppingCart size={18} /> Add to cart
+                        {/* Buttons */}
+                        <div className="mt-6 flex gap-4">
+                            <button
+                                onClick={onAddToCart}
+                                className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold"
+                            >
+                                <div className="flex items-center justify-center gap-2">
+                                    <ShoppingCart size={18} />
+                                    Add to Cart
+                                </div>
+                            </button>
+
+                            <button className="px-6 py-3 border rounded-lg bg-white hover:bg-gray-50">
+                                Buy Now
+                            </button>
+                        </div>
+
+                        {/* Features */}
+                        {product.features && (
+                            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {product.features.map((f, i) => (
+                                    <div
+                                        key={i}
+                                        className="flex items-start gap-3 text-sm"
+                                    >
+                                        <div className="w-2 h-2 mt-1 bg-blue-600 rounded-full" />
+                                        {f}
+                                    </div>
+                                ))}
                             </div>
-                        </motion.button>
+                        )}
 
-                        <motion.button
-                            onClick={() => alert("Buy now demo")}
-                            whileTap={{ scale: 0.98 }}
-                            className="px-4 py-3 border border-gray-200 rounded-lg bg-white text-gray-800"
-                        >
-                            Buy now
-                        </motion.button>
-                    </div>
+                        {/* Specifications */}
+                        <div className="mt-8 border-t pt-4">
+                            <button
+                                onClick={() => setSpecOpen((s) => !s)}
+                                className="flex justify-between w-full text-left"
+                            >
+                                <span className="font-medium text-gray-900">
+                                    Specifications
+                                </span>
+                                <span className="text-gray-600">
+                                    {specOpen ? "Hide" : "Show"}
+                                </span>
+                            </button>
 
-                    {/* Features list */}
-                    {product.features && (
-                        <div className="mt-8 grid grid-cols-2 gap-4">
-                            {product.features.map((f, i) => (
-                                <div key={i} className="flex items-start gap-3">
-                                    <div className="w-8 h-8 rounded bg-blue-50 flex items-center justify-center text-sm text-blue-700">•</div>
-                                    <div className="text-sm text-gray-700">{f}</div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Specs accordion */}
-                    <div className="mt-6 border-t border-gray-200 pt-4">
-                        <button
-                            onClick={() => setSpecOpen((s) => !s)}
-                            className="flex items-center justify-between w-full"
-                        >
-                            <div className="text-sm font-medium text-gray-800">Specifications</div>
-                            <div className="text-sm text-gray-600">{specOpen ? "Hide" : "Show"}</div>
-                        </button>
-
-                        <AnimatePresence>
-                            {specOpen && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="overflow-hidden mt-3 text-sm text-gray-700"
-                                >
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {product.specifications &&
-                                            Object.entries(product.specifications).map(([k, v]) => (
-                                                <div key={k} className="py-2">
-                                                    <div className="text-xs text-gray-500 capitalize">{k}</div>
-                                                    <div className="text-sm text-gray-800">{v}</div>
-                                                </div>
-                                            ))}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
-
-                    {/* Reviews */}
-                    <div className="mt-8">
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-semibold text-gray-800">Customer reviews</h3>
-                            <div className="text-sm text-gray-600">{(product.reviews || []).length} reviews</div>
+                            <AnimatePresence>
+                                {specOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{
+                                            opacity: 1,
+                                            height: "auto",
+                                        }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="overflow-hidden mt-3"
+                                    >
+                                        <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
+                                            {product.specifications &&
+                                                Object.entries(
+                                                    product.specifications
+                                                ).map(([k, v]) => (
+                                                    <div key={k}>
+                                                        <div className="text-xs text-gray-500 uppercase">
+                                                            {k}
+                                                        </div>
+                                                        <div>{v}</div>
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
-                        <div className="mt-4 space-y-3">
-                            {(product.reviews || []).slice(0, 3).map((r) => (
-                                <div key={r.id} className="bg-white/80 p-3 rounded-lg">
-                                    <div className="flex items-center justify-between">
-                                        <div className="font-medium text-gray-900">{r.user}</div>
-                                        <div className="text-yellow-500 font-semibold">{r.rating} ★</div>
-                                    </div>
-                                    <div className="text-sm text-gray-700 mt-1">{r.text}</div>
-                                </div>
-                            ))}
+                        {/* Reviews */}
+                        <div className="mt-8">
+                            <h3 className="text-lg font-semibold">
+                                Customer Reviews
+                            </h3>
+                            <div className="mt-3 space-y-3">
+                                {(product.reviews || [])
+                                    .slice(0, 3)
+                                    .map((r) => (
+                                        <div
+                                            key={r.id}
+                                            className="p-3 bg-gray-50 rounded border"
+                                        >
+                                            <div className="flex justify-between">
+                                                <span className="font-medium">
+                                                    {r.user}
+                                                </span>
+                                                <span className="text-yellow-500">
+                                                    {r.rating} ★
+                                                </span>
+                                            </div>
+                                            <p className="text-sm mt-1 text-gray-700">
+                                                {r.text}
+                                            </p>
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Related products slider */}
-            <div className="mt-10 bg-white/0 p-4 rounded-lg overflow-hidden">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Related products</h4>
-                <div className="flex gap-3 overflow-x-auto hide-scrollbar">
+                {/* ---------------- RELATED PRODUCTS ---------------- */}
+                <h3 className="text-lg font-semibold mt-12 mb-4">
+                    Related Products
+                </h3>
+
+                <div className="flex gap-4 overflow-x-auto pb-3 hide-scrollbar">
                     {(product.relatedProducts || []).map((rp) => (
-                        <motion.div
+                        <div
                             key={rp.id}
-                            whileHover={{ scale: 1.03 }}
-                            className="min-w-[180px] bg-white rounded-lg p-3 shadow-sm flex-shrink-0"
+                            className="min-w-[180px] bg-white rounded-lg shadow p-3 border"
                         >
-                            <div className="w-full h-32 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-                                <img src={rp.image} alt={rp.name} className="w-full h-full object-cover" />
+                            <div className="w-full h-32 bg-gray-50 rounded flex items-center justify-center overflow-hidden">
+                                <img
+                                    src={rp.image}
+                                    className="w-full h-full object-contain"
+                                    alt=""
+                                />
                             </div>
-                            <div className="mt-2">
-                                <div className="text-sm font-medium text-gray-900">{rp.name}</div>
-                                <div className="text-sm text-gray-700 mt-1">₹{rp.price}</div>
+                            <div className="mt-2 text-sm text-gray-900 font-medium">
+                                {rp.name}
                             </div>
-                        </motion.div>
+                            <div className="text-sm text-gray-700">
+                                ₹{rp.price}
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
         </div>
-    </div >
-  );
+    );
 }
