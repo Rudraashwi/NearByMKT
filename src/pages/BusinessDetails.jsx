@@ -17,7 +17,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import data from "../data/product.json";
 
 // ⭐ IMPORT MARKET CATEGORIES
-import { marketCategories } from "../assets/MarketCategories";
+import marketCategories from "../assets/marketCategories.js";
+
 
 const LS_FAV_KEY = "nbm_favs_v1";
 
